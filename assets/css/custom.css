@@ -1,0 +1,160 @@
+/*
+ * MJ Salon AIS — Custom Stylesheet
+ * assets/css/custom.css
+ *
+ * Supplements the inline styles in navbar.php with
+ * system-wide overrides and additional components.
+ */
+
+/* ── CSS Reset extras ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+img { max-width: 100%; }
+
+/* ── Scrollbar styling ────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f5ede8; }
+::-webkit-scrollbar-thumb { background: #d4b5ac; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #c9636a; }
+
+/* ── Loading overlay ──────────────────────────────────────── */
+#loading-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26, 18, 24, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  display: none;
+}
+#loading-overlay .spinner {
+  width: 48px; height: 48px;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: #c9636a;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Tooltip-style info badges ────────────────────────────── */
+.info-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #fdf3e3; border: 1px solid #f5d89b;
+  color: #7a5a00; border-radius: 8px;
+  padding: 6px 12px; font-size: 0.78rem;
+}
+
+/* ── AIS Concept tag ──────────────────────────────────────── */
+.ais-concept-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #c9636a, #8b1f2f);
+  color: #fff;
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+  vertical-align: middle; margin-left: 6px;
+}
+
+/* ── Pagination ───────────────────────────────────────────── */
+.pagination { gap: 4px; }
+.page-link {
+  border-radius: 8px !important;
+  border: 1.5px solid #e8ddd6;
+  color: #1a1218;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
+.page-link:hover { background: #fce7ea; border-color: #c9636a; color: #c9636a; }
+.page-item.active .page-link { background: #c9636a; border-color: #c9636a; }
+
+/* ── Modal overrides ──────────────────────────────────────── */
+.modal-content { border-radius: 16px; border: 1px solid #e8ddd6; }
+.modal-header  { border-radius: 16px 16px 0 0; }
+.modal-backdrop { background: rgba(26,18,24,0.5); }
+
+/* ── Form group spacing ───────────────────────────────────── */
+.form-group-ais { margin-bottom: 16px; }
+
+/* ── Table hover row highlight ────────────────────────────── */
+.ais-table tbody tr { transition: background 0.1s; }
+
+/* ── Sidebar active glow ──────────────────────────────────── */
+.nav-item-link.active {
+  box-shadow: inset 3px 0 0 0 #c9636a;
+}
+
+/* ── Responsive: collapsed sidebar on mobile ──────────────── */
+@media (max-width: 768px) {
+  .sidebar { box-shadow: 4px 0 20px rgba(0,0,0,0.4); }
+  .sidebar-toggle-btn {
+    position: fixed; top: 14px; left: 14px;
+    z-index: 1100;
+    background: #c9636a; color: #fff;
+    border: none; border-radius: 8px;
+    padding: 8px 10px; font-size: 1.1rem; cursor: pointer;
+  }
+  .overlay-bg {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+    display: none;
+  }
+  .overlay-bg.show { display: block; }
+}
+
+/* ── Receipt print overrides ──────────────────────────────── */
+@media print {
+  .sidebar, .topbar, .receipt-actions,
+  .no-print, .btn-logout { display: none !important; }
+  .main-content { margin-left: 0 !important; }
+  body { background: #fff !important; }
+}
+
+/* ── Animated entrance for stat cards ────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stat-card {
+  animation: fadeInUp 0.35s ease both;
+}
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.10s; }
+.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(4) { animation-delay: 0.20s; }
+
+/* ── Toast notification ───────────────────────────────────── */
+.ais-toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: #1a1218; color: #fff;
+  padding: 12px 20px; border-radius: 12px;
+  font-size: 0.85rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  z-index: 9000;
+  display: flex; align-items: center; gap: 10px;
+  transform: translateY(80px); opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+  max-width: 340px;
+}
+.ais-toast.show { transform: translateY(0); opacity: 1; }
+.ais-toast.success .toast-icon { color: #4ade80; }
+.ais-toast.error   .toast-icon { color: #f87171; }
+
+/* ── Internal control badge (for AIS presentation) ─────────── */
+.control-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #f0fdf4; border: 1px solid #86efac;
+  color: #166534; border-radius: 6px;
+  padding: 3px 8px; font-size: 0.72rem; font-weight: 500;
+}
+.control-badge.fail {
+  background: #fef2f2; border-color: #fca5a5; color: #b91c1c;
+}
+
+/* ── Empty state ──────────────────────────────────────────── */
+.empty-state {
+  text-align: center; padding: 48px 24px;
+  color: #aaa;
+}
+.empty-state i {
+  font-size: 2.5rem; display: block;
+  margin-bottom: 12px; color: #ddd;
+}
+.empty-state p { font-size: 0.88rem; }
